@@ -112,31 +112,36 @@
 
   <script>
     $(document).ready(function() {
-      $('#nutritionalTable').DataTable({
+    // Initialize DataTables
+    $('#nutritionalTable').DataTable({
         "paging": true,
         "searching": true,
         "info": true
-      });
-
-      let formToSubmit;
-      $('.add-to-tracking').on('click', function() {
-        formToSubmit = $(this).closest('.tracking-form');
-        $.ajax({
-          type: formToSubmit.attr('method'),
-          url: formToSubmit.attr('action'),
-          data: formToSubmit.serialize(),
-          success: function(response) {
-            if (response.status === 'success') {
-              $('#confirmationModal').modal('show');
-            }
-          }
-        });
-      });
-
-      $('#confirmRedirect').on('click', function() {
-        window.location.href = "{% url 'calorie_tracking:calorie_tracking' %}";
-      });
     });
+
+    // Use delegated event handling
+    $('#nutritionalTable tbody').on('click', '.add-to-tracking', function() {
+        let formToSubmit = $(this).closest('.tracking-form');
+        const csrfToken = formToSubmit.find('input[name="csrfmiddlewaretoken"]').val(); // Get the CSRF token
+
+        $.ajax({
+            type: formToSubmit.attr('method'),
+            url: formToSubmit.attr('action'),
+            data: formToSubmit.serialize(),
+            headers: { 'X-CSRFToken': csrfToken }, // Add CSRF token to the request headers
+            success: function(response) {
+                $('#confirmationModal').modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error adding item to tracking:', status, error);
+            }
+        });
+    });
+
+    $('#confirmRedirect').on('click', function() {
+        window.location.href = "{% url 'calorie_tracking:calorie_tracking' %}";
+    });
+});
   </script>
 </body>
 
