@@ -8,7 +8,7 @@ def problem_report(request):
 
     if form.is_valid() and request.method == "POST":
         form.save()
-        return HttpResponseRedirect(reverse('main:data_list'))
+        return HttpResponseRedirect(reverse('list_information:data_information'))
 
     context = {'form': form}
     return render(request, "problem_report.html", context)
