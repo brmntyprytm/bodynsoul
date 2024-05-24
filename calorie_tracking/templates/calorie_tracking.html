@@ -89,7 +89,7 @@
       const totalCaloriesDiv = document.getElementById("total-calories");
       totalCaloriesDiv.innerHTML = `Total Calories: ${totalCalories} kcal`;
 
-      if (totalCalories > recommendedCalories) {
+      if ((totalCalories < 0.8*recommendedCalories) || (totalCalories > 1.2*recommendedCalories)) {
         totalCaloriesDiv.style.color = "red";
       } else {
         totalCaloriesDiv.style.color = "green";
