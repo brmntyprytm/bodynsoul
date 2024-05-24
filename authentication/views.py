@@ -7,6 +7,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.forms import AuthenticationForm
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.views.decorators.csrf import csrf_exempt
+
 @csrf_exempt
 def auth_page(request):
     if request.method == 'POST':
@@ -24,8 +30,12 @@ def auth_page(request):
                 user = authenticate(username=request.POST['username'], password=request.POST['password'])
                 if user is not None:
                     login(request, user)
-                    messages.success(request, 'You are now logged in!')
-                    return redirect('list_information:data_information')
+                    if user.is_superuser:
+                        messages.success(request, 'You are now logged in as a superuser!')
+                        return redirect('admin:admin_landing')
+                    else:
+                        messages.success(request, 'You are now logged in!')
+                        return redirect('list_information:data_information')
                 else:
                     messages.error(request, 'Invalid username or password')
     else:
