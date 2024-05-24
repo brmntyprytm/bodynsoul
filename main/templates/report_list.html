@@ -4,22 +4,44 @@
 <title>Report List</title>
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
+<style>
+    /* Custom CSS for intro animations */
+    @keyframes slideIn {
+        0% {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+    .slide-in {
+        animation: slideIn 0.5s ease-in-out;
+    }
+    .table-bisque {
+        background-color: bisque; /* Set background color to bisque */
+    }
+    body {
+        background-color: rgb(57, 31, 1); /* Set background color of body */
+        color: white; /* Set text color to white */
+    }
+</style>
 {% endblock meta %}
 
 {% block content %}
 <div class="container mt-5">
-    <table class="table table-bordered">
+    <table class="table table-bordered table-bisque"> <!-- Set background color to bisque -->
         <thead>
             <tr>
-                <th>Username</th>
-                <th>Description</th>
-                <th>Date Added</th>
+                <th class="animated-header">Username</th> <!-- Add class for animated headers -->
+                <th class="animated-header">Description</th>
+                <th class="animated-header">Date Added</th>
             </tr>
         </thead>
         <tbody>
             {% for report in reports %}
-            <tr>
+            <tr class="animated-row"> <!-- Add class for animated rows -->
                 <td>{{ report.username }}</td>
                 <td>{{ report.description }}</td>
                 <td>{{ report.date_time }}</td>
@@ -28,8 +50,27 @@
         </tbody>
     </table>
 </div>
-</div>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const animatedHeaders = document.querySelectorAll('.animated-header');
+    const animatedRows = document.querySelectorAll('.animated-row');
+
+    // Function to animate headers and rows one by one
+    function animateElements(elements) {
+        elements.forEach((element, index) => {
+            setTimeout(() => {
+                element.classList.add('slide-in');
+            }, index * 200); // Adjust the delay time here (in milliseconds)
+        });
+    }
+
+    // Start animating headers and rows
+    animateElements(animatedHeaders);
+    animateElements(animatedRows);
+});
+</script>
 {% endblock content %}
