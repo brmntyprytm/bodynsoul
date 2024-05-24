@@ -106,16 +106,16 @@
   <div class="auth-card">
     <div class="auth-form-container" id="sign-in-container">
       <h1>Sign In</h1>
-      <form method="POST">
+      <form method="POST" action="{% url 'authentication:auth_page' %}">
         {% csrf_token %}
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
-          <input type="text" id="username" name="username" placeholder="Enter your username" class="form-control">
+          <input type="text" id="username" name="username" placeholder="Enter your username" class="form-control" required>
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
           <div class="input-group">
-            <input type="password" id="password" name="password" placeholder="Enter your password" class="form-control">
+            <input type="password" id="password" name="password" placeholder="Enter your password" class="form-control" required>
             <span class="input-group-text" id="togglePassword">Show</span>
           </div>
         </div>
@@ -137,23 +137,23 @@
     </div>
     <div class="auth-form-container hidden" id="sign-up-container">
       <h1>Register</h1>
-      <form method="POST">
+      <form method="POST" action="{% url 'authentication:auth_page' %}">
         {% csrf_token %}
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
-          <input type="text" id="username" name="username" placeholder="Enter your username" class="form-control">
+          <input type="text" id="username" name="username" placeholder="Enter your username" class="form-control" required>
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
           <div class="input-group">
-            <input type="password" id="password" name="password" placeholder="Enter your password" class="form-control">
+            <input type="password" id="password" name="password1" placeholder="Enter your password" class="form-control" required>
             <span class="input-group-text" id="togglePassword">Show</span>
           </div>
         </div>
         <div class="mb-3">
           <label for="confirm_password" class="form-label">Confirm Password</label>
           <div class="input-group">
-            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" class="form-control">
+            <input type="password" id="confirm_password" name="password2" placeholder="Confirm your password" class="form-control" required>
             <span class="input-group-text" id="toggleConfirmPassword">Show</span>
           </div>
         </div>
@@ -175,7 +175,7 @@
     </div>
     <div class="auth-toggle-container left-panel" id="toggle-container">
       <h1 id="toggle-heading">Welcome Back!</h1>
-      <p id="toggle-text">Don't have an account yet? </p>
+      <p id="toggle-text">Don't have an account yet?</p>
       <button id="toggle-button">Sign Up</button>
     </div>
   </div>
